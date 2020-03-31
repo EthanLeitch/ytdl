@@ -1,0 +1,30 @@
+links
+
+install xcode cmdline tools (ONLY WORKS ON CATALINA):
+https://developer.apple.com/download/more/
+
+OR:
+xcode-select --install
+
+download python3:
+https://www.python.org/downloads/
+
+brew (modified install): 
+chmod +x moddedinstall.sh
+./moddedinstall.sh
+
+ffmpeg:
+brew install ffmpeg
+
+youtube-dl:
+brew install youtube-dl
+
+to make a youtube-dl config file:
+nano /etc/youtube-dl.conf
+
+paste in:
+# Save all videos under Downloads directory in your home directory
+-o ~/Downloads/%(title)s.%(ext)s
+
+then copy youtube-downloader.py to /Users/Name (open ~)
+then drag YouTube Downloader to Applications
