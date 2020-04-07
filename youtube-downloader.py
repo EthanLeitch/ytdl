@@ -31,7 +31,11 @@ def msg(stdscr):
     print_center(stdscr, message)
     stdscr.refresh()
     stdscr.getch()
-    os.system("killall Terminal")
+    if message == "Invalid URL provided. Press enter to quit.":
+        os.system("killall Terminal")
+    else:
+        os.system("open Downloads")
+        os.system("killall Terminal")
 
 def main(stdscr):
 
