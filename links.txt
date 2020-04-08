@@ -9,6 +9,10 @@ xcode-select --install
 download python3:
 https://www.python.org/downloads/
 
+clone ytdl
+cd Desktop
+git clone https://github.com/EthanLeitch/ytdl.git
+
 brew (modified install): 
 chmod +x moddedinstall.sh
 ./moddedinstall.sh
