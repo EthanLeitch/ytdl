@@ -5,6 +5,7 @@ A free and simple YouTube video downloader for Mac and Linux.
 #### Install the following:
 Skip this step if xcode commandline tools is already installed on your system.
 Xcode commandline tools with `xcode-select --install`
+
 python3 (https://www.python.org/downloads/)
 
 #### Clone the repository:
