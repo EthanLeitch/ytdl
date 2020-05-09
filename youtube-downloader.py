@@ -110,11 +110,16 @@ if len(url) < 44 or "https://www.youtube.com/watch?v=" not in url:
 else:
     if mediaFormat == "mp3":
         message = "Downloading successful! Press enter to quit."
-        os.system("youtube-dl --extract-audio --audio-format mp3 "+ url)
+        os.system("youtube-dl --rm-cache-dir")
+        os.system("[ytdl] Cache cleared successfully!")
+	os.system("youtube-dl --extract-audio --audio-format mp3 "+ url)
         curses.wrapper(msg)
     if mediaFormat == "mp4":
         message = "Downloading successful! Press enter to quit."
-        os.system("youtube-dl -f mp4 "+ url)
+        os.system("youtube-dl --rm-cache-dir")
+	os.system("[ytdl] Cache cleared successfully!")
+	os.system("youtube-dl -f mp4 "+ url)
         curses.wrapper(msg)
 
-print("ALERT: IF YOU ARE SEEING THIS MESSAGE SOMETHING HAS BROKEN. CONTACT A DEVELOPER FOR MORE INFO")
+print("ALERT: IF YOU ARE SEEING THIS MESSAGE SOMETHING HAS BROKEN. CONTACT ETHAN FOR MORE INFO")
+
