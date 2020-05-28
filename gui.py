@@ -60,6 +60,7 @@ class Window(QWidget):
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
+    app.setStyleSheet("QPushButton { color: white; background-color: green;} QPushButton:hover { background-color: blue; }")
     mainWin = Window()
     mainWin.show()
     sys.exit( app.exec_() )
