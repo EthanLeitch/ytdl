@@ -1,4 +1,5 @@
 from pytube import YouTube
-import os
 
-video = YouTube("https://www.youtube.com/watch?v=wDgQdr8ZkTw")
+yt = YouTube("https://www.youtube.com/watch?v=5jKZ9KGtee0")
+print("Title: " + str(yt.title))
+print(str(yt.length) + " seconds long")
