@@ -1,8 +1,19 @@
 import os, curses, sys, subprocess
+from PyQt5.QtWidgets import QApplication, QLabel
+from PyQt5 import QtWidgets
 from curses import wrapper
 from curses.textpad import Textbox, rectangle
 
 menu = ['extract audio (mp3)', 'extract video (mp4)', 'exit']
+
+app = QApplication([])
+
+label = QLabel('Enter a YouTube URL in the box below')
+label.show()
+
+urlbox = QtWidgets.QLineEdit()
+urlbox.show()
+app.exec_()
 
 def print_menu(stdscr, selected_row_idx):
     stdscr.clear()
