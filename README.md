@@ -31,4 +31,4 @@ It would claim that the xcode command line tools weren't installed when they act
 #### Move "youtube-downloader.py" to /Users/Name
 `sudo mv youtube-downloader.py /Users/Name`
 
-unfinished, check back later
+You're done! Just launch the bash script and you should be good to go!

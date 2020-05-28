@@ -1,0 +1,2 @@
+Use a Python 3 module to download youtube videos and not youtube-dl
+Migrate to PyQt5 for cross-os support https://build-system.fman.io/pyqt5-tutorial
