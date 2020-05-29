@@ -12,6 +12,7 @@ encodingType = "MP4"
 pybutton = ""
 urlEmpty = ""
 invalid = ""
+progress = ""
 
 class Window(QWidget):
     def __init__(self):
@@ -64,6 +65,12 @@ class Window(QWidget):
         invalid.resize(200, 32)
         invalid.move(5, 100)
         invalid.hide()
+
+        global progress
+
+        progress = QProgressBar(self)
+        progress.setGeometry(80, 105, 200, 25)
+        progress.hide()
     
     def onClicked(self):
         global encodingType
@@ -88,10 +95,14 @@ class Window(QWidget):
                 pybutton.hide()
                 urlEmpty.hide()
                 invalid.hide()
+                progress.show()
+                progress.setValue(20)
                 if encodingType == "MP4":
                     os.system("youtube-dl -f mp4 " + self.line.text())
+                    progress.setValue(100)
                 else:
                     os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
+                    progress.setValue(100)
 
 
 if __name__ == "__main__":
