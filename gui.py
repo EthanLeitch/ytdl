@@ -1,5 +1,6 @@
 import sys
-import os, curses, sys, subprocess
+import os, curses, sys, shlex
+from subprocess import Popen, PIPE, STDOUT
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
@@ -7,12 +8,16 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize    
 from time import sleep
+from pytube import YouTube
+
 
 encodingType = "MP4"
 pybutton = ""
 urlEmpty = ""
 invalid = ""
 progress = ""
+output = ""
+p = ""
 
 class Window(QWidget):
     def __init__(self):
@@ -71,6 +76,13 @@ class Window(QWidget):
         progress = QProgressBar(self)
         progress.setGeometry(80, 105, 200, 25)
         progress.hide()
+
+        global output
+
+        output = QLabel(self)
+        output.setText('')
+        output.setGeometry(80, 140, 300, 25)
+        output.hide()
     
     def onClicked(self):
         global encodingType
@@ -82,6 +94,8 @@ class Window(QWidget):
     def clickMethod(self):
         global encodingType
         global pybutton
+        global output
+        global p
         print(encodingType)
         
         if self.line.text() == "":
@@ -98,8 +112,22 @@ class Window(QWidget):
                 progress.show()
                 progress.setValue(20)
                 if encodingType == "MP4":
-                    os.system("youtube-dl -f mp4 " + self.line.text())
-                    progress.setValue(100)
+                    p = Popen('youtube-dl ' + self.line.text(), stdout = PIPE, stderr = STDOUT, shell = True)
+                    self.setMinimumSize(QSize(320, 170))
+                    while True:
+                        line = p.stdout.readline()
+                        string = str(line)
+                        urlOutput = self.line.text().replace("https://www.youtube.com/watch?v=", "")
+                        print(urlOutput)
+                        a = string.replace("b'[youtube] ", "")
+                        b = a.replace("b''", "")
+                        c = b.replace("b'[download] ", "")
+                        d = c.replace(urlOutput + ": ", "")
+                        print(d)
+                        output.show()
+                        output.setText(d)
+                        if not line: break
+                        progress.setValue(100)
                 else:
                     os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
                     progress.setValue(100)

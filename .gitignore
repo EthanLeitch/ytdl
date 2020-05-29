@@ -3,3 +3,4 @@ __pycache__/
 
 # Ignore all test videos
 *.mp4
+testvideos/
