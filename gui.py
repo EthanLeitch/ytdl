@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtCore import QSize    
 
-encodingType = "-"
+encodingType = "MP4"
 
 class Window(QWidget):
     def __init__(self):
