@@ -89,7 +89,9 @@ class Window(QWidget):
                 urlEmpty.hide()
                 invalid.hide()
                 if encodingType == "MP4":
-                    os.system("youtube-dl -f mp4 " + self.line.text())
+                    yt = YouTube(self.line.text())
+                    video = yt.streams.filter(progressive=True).first()
+                    video.download("testvideos")
                 else:
                     os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
 
