@@ -4,6 +4,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
 from PyQt5.QtWidgets import QPushButton
+from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize    
 
 encodingType = "MP4"
@@ -16,6 +17,7 @@ class Window(QWidget):
 
         self.setMinimumSize(QSize(320, 140))    
         self.setWindowTitle("YouTube Downloader") 
+        self.setWindowIcon(QIcon('icon.png'))
 
         self.url = QLabel(self)
         self.url.setText('URL:')
