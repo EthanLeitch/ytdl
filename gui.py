@@ -1,5 +1,5 @@
-import sys
 import os, curses, sys, subprocess
+from pytube import YouTube
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
