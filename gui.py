@@ -79,9 +79,11 @@ class Window(QWidget):
         
         if self.line.text() == "":
             urlEmpty.show()
+            invalid.hide()
         else:
             if "https://www.youtube.com/watch?v=" not in self.line.text() and self.line.text() != "":
                 invalid.show()
+                urlEmpty.hide()
             else:
                 pybutton.hide()
                 urlEmpty.hide()
@@ -90,7 +92,6 @@ class Window(QWidget):
                     os.system("youtube-dl -f mp4 " + self.line.text())
                 else:
                     os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
-                
 
 
 if __name__ == "__main__":
