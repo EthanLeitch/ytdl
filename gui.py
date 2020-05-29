@@ -6,8 +6,12 @@ from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
 from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize    
+from time import sleep
 
 encodingType = "MP4"
+pybutton = ""
+urlEmpty = ""
+invalid = ""
 
 class Window(QWidget):
     def __init__(self):
@@ -38,10 +42,28 @@ class Window(QWidget):
         radiobutton.toggled.connect(self.onClicked)
         layout.addWidget(radiobutton, 0, 1)
 
+        global pybutton
+
         pybutton = QPushButton('Download', self)
         pybutton.clicked.connect(self.clickMethod)
         pybutton.resize(200,32)
-        pybutton.move(80, 100)        
+        pybutton.move(80, 100)    
+
+        global urlEmpty
+
+        urlEmpty = QLabel(self)
+        urlEmpty.setText('Url is empty')
+        urlEmpty.resize(200, 32)
+        urlEmpty.move(5, 100)
+        urlEmpty.hide()
+
+        global invalid
+
+        invalid = QLabel(self)
+        invalid.setText('Invalid url.')
+        invalid.resize(200, 32)
+        invalid.move(5, 100)
+        invalid.hide()
     
     def onClicked(self):
         global encodingType
@@ -52,12 +74,23 @@ class Window(QWidget):
 
     def clickMethod(self):
         global encodingType
+        global pybutton
         print(encodingType)
-
-        if encodingType == "MP4":
-            os.system("youtube-dl -f mp4 " + self.line.text())
+        
+        if self.line.text() == "":
+            urlEmpty.show()
         else:
-            os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
+            if "https://www.youtube.com/watch?v=" not in self.line.text() and self.line.text() != "":
+                invalid.show()
+            else:
+                pybutton.hide()
+                urlEmpty.hide()
+                invalid.hide()
+                if encodingType == "MP4":
+                    os.system("youtube-dl -f mp4 " + self.line.text())
+                else:
+                    os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
+                
 
 
 if __name__ == "__main__":
