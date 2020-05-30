@@ -52,7 +52,8 @@ class Window(QWidget):
         global urlEmpty
 
         urlEmpty = QLabel(self)
-        urlEmpty.setText('Url is empty')
+        urlEmpty.setText('Url is empty.')
+        urlEmpty.setStyleSheet("color: red")
         urlEmpty.resize(200, 32)
         urlEmpty.move(5, 100)
         urlEmpty.hide()
@@ -61,6 +62,7 @@ class Window(QWidget):
 
         invalid = QLabel(self)
         invalid.setText('Invalid url.')
+        invalid.setStyleSheet("color: red")
         invalid.resize(200, 32)
         invalid.move(5, 100)
         invalid.hide()
@@ -90,8 +92,8 @@ class Window(QWidget):
                 invalid.hide()
                 if encodingType == "MP4":
                     yt = YouTube(self.line.text())
-                    video = yt.streams.filter(progressive=True).first()
-                    video.download("testvideos")
+                    YouTube(self.line.text()).streams.filter(progressive=True).download()
+                    #print(yt.streams)
                 else:
                     os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
 
