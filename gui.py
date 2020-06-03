@@ -1,5 +1,4 @@
-import os, curses, sys, subprocess
-from pytube import YouTube
+import os, curses, sys, subprocess, youtube_dl
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
@@ -91,9 +90,7 @@ class Window(QWidget):
                 urlEmpty.hide()
                 invalid.hide()
                 if encodingType == "MP4":
-                    yt = YouTube(self.line.text())
-                    YouTube(self.line.text()).streams.filter(progressive=True).download()
-                    #print(yt.streams)
+                    print("add mp4 here!")
                 else:
                     os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
 
