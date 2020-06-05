@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 import sys
 import os, curses, sys, shlex
 from subprocess import Popen, PIPE, STDOUT
+=======
+import os, curses, sys, subprocess
+>>>>>>> 23e1a8e8cba660c56a1dfa88a273a4c981a6fb6a
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
@@ -8,7 +12,6 @@ from PyQt5.QtWidgets import QPushButton
 from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import QSize    
 from time import sleep
-from pytube import YouTube
 
 
 encodingType = "MP4"
