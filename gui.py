@@ -1,10 +1,4 @@
-<<<<<<< HEAD
-import sys
-import os, curses, sys, shlex
-from subprocess import Popen, PIPE, STDOUT
-=======
-import os, curses, sys, subprocess
->>>>>>> 23e1a8e8cba660c56a1dfa88a273a4c981a6fb6a
+import os, curses, sys, subprocess, youtube_dl
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
@@ -61,7 +55,8 @@ class Window(QWidget):
         global urlEmpty
 
         urlEmpty = QLabel(self)
-        urlEmpty.setText('Url is empty')
+        urlEmpty.setText('Url is empty.')
+        urlEmpty.setStyleSheet("color: red")
         urlEmpty.resize(200, 32)
         urlEmpty.move(5, 100)
         urlEmpty.hide()
@@ -70,6 +65,7 @@ class Window(QWidget):
 
         invalid = QLabel(self)
         invalid.setText('Invalid url.')
+        invalid.setStyleSheet("color: red")
         invalid.resize(200, 32)
         invalid.move(5, 100)
         invalid.hide()
