@@ -115,9 +115,16 @@ class Window(QWidget):
                         'extract-audio': 'True',
                         'progress_hooks': [self.my_hook],
                         'outtmpl': '/home/' + getpass.getuser() + '/Downloads/%(title)s.%(ext)s',}
-                    with youtube_dl.YoutubeDL(ytdl_opts) as ydl:
-                        print(self.line.text())
-                        ydl.download([self.line.text()])
+                else:
+                    ytdl_opts = {
+                        'format': 'bestaudio/best',       
+                        'outtmpl': '/home/' + getpass.getuser() + '/Downloads/%(title)s.%(ext)s',        
+                        'noplaylist' : True,        
+                        'progress_hooks': [self.my_hook],
+                    }
+                with youtube_dl.YoutubeDL(ytdl_opts) as ydl:
+                    print(self.line.text())
+                    ydl.download([self.line.text()])
                     #self.setMinimumSize(QSize(320, 170))
                     #while True:
                     #    line = p
