@@ -81,7 +81,7 @@ class Window(QWidget):
         global finishedDownloading
 
         finishedDownloading = QLabel(self)
-        finishedDownloading.setText('Saved to downloads')
+        finishedDownloading.setText('Saved to Downloads!')
         finishedDownloading.setGeometry(80, 105, 200, 25)
         finishedDownloading.hide()
     

@@ -1,4 +1,5 @@
-import os, curses, sys, subprocess, youtube_dl
+from __future__ import unicode_literals
+import os, curses, sys, youtube_dl, getpass
 from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
@@ -13,7 +14,7 @@ pybutton = ""
 urlEmpty = ""
 invalid = ""
 progress = ""
-output = ""
+finishedDownloading = ""
 p = ""
 
 class Window(QWidget):
@@ -28,10 +29,11 @@ class Window(QWidget):
 
         self.url = QLabel(self)
         self.url.setText('URL:')
-        self.line = QLineEdit(self)
 
+        self.line = QLineEdit(self)
         self.line.move(80, 20)
         self.line.resize(200, 32)
+        
         self.url.move(20, 20)
 
         radiobutton = QRadioButton("Download audio and video")
@@ -76,12 +78,12 @@ class Window(QWidget):
         progress.setGeometry(80, 105, 200, 25)
         progress.hide()
 
-        global output
+        global finishedDownloading
 
-        output = QLabel(self)
-        output.setText('')
-        output.setGeometry(80, 140, 300, 25)
-        output.hide()
+        finishedDownloading = QLabel(self)
+        finishedDownloading.setText('Saved to Downloads!')
+        finishedDownloading.setGeometry(80, 105, 200, 25)
+        finishedDownloading.hide()
     
     def onClicked(self):
         global encodingType
@@ -93,8 +95,7 @@ class Window(QWidget):
     def clickMethod(self):
         global encodingType
         global pybutton
-        global output
-        global p
+        global finishedDownloading
         print(encodingType)
         
         if self.line.text() == "":
@@ -109,27 +110,52 @@ class Window(QWidget):
                 urlEmpty.hide()
                 invalid.hide()
                 progress.show()
-                progress.setValue(20)
                 if encodingType == "MP4":
-                    p = Popen('youtube-dl ' + self.line.text(), stdout = PIPE, stderr = STDOUT, shell = True)
-                    self.setMinimumSize(QSize(320, 170))
-                    while True:
-                        line = p.stdout.readline()
-                        string = str(line)
-                        urlOutput = self.line.text().replace("https://www.youtube.com/watch?v=", "")
-                        print(urlOutput)
-                        a = string.replace("b'[youtube] ", "")
-                        b = a.replace("b''", "")
-                        c = b.replace("b'[download] ", "")
-                        d = c.replace(urlOutput + ": ", "")
-                        print(d)
-                        output.show()
-                        output.setText(d)
-                        if not line: break
-                        progress.setValue(100)
+                    ytdl_opts = {
+                        'extract-audio': 'True',
+                        'progress_hooks': [self.my_hook],
+                        'outtmpl': 'Downloads/%(title)s.%(ext)s',}
                 else:
-                    os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
-                    progress.setValue(100)
+                    ytdl_opts = {
+                        'format': 'bestaudio/best',       
+                        'outtmpl': 'Downloads/%(title)s.%(ext)s',        
+                        'noplaylist' : True,        
+                        'progress_hooks': [self.my_hook],
+                    }
+                with youtube_dl.YoutubeDL(ytdl_opts) as ydl:
+                    print(self.line.text())
+                    ydl.download([self.line.text()])
+                    #self.setMinimumSize(QSize(320, 170))
+                    #while True:
+                    #    line = p
+                    #    string = str(line)
+                    #    urlfinishedDownloading = self.line.text().replace("https://www.youtube.com/watch?v=", "")
+                    #    print(urlfinishedDownloading)
+                    #    a = string.replace("b'[youtube] ", "")
+                    #    b = a.replace("b''", "")
+                    #    c = b.replace("b'[download] ", "")
+                    #    d = c.replace(urlfinishedDownloading + ": ", "")
+                    #    print(d)
+                    #    finishedDownloading.show()
+                    #    finishedDownloading.setText(d)
+                    #    if not line: break
+                    #    progress.setValue(100)
+                #else:
+                #    os.system("youtube-dl --extract-audio --audio-format mp3 "+ self.line.text())
+                #    progress.setValue(100)
+
+
+    def my_hook(self, d):
+        if d['status'] == 'finished':
+            file_tuple = os.path.split(os.path.abspath(d['filename']))
+            print("Done downloading {}".format(file_tuple[1]))
+            progress.hide()
+            finishedDownloading.show()
+        if d['status'] == 'downloading':
+            p = d['_percent_str']
+            p = p.replace('%','')
+            progress.setValue(float(p))
+            print(d['filename'], d['_percent_str'], d['_eta_str'])
 
 
 if __name__ == "__main__":
