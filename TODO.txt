@@ -1,2 +1,9 @@
-Use a Python 3 module to download youtube videos and not youtube-dl
-Migrate to PyQt5 for cross-os support https://build-system.fman.io/pyqt5-tutorial
+In order of priority
+
+Make GUI more user-friendly
+Allow selection of directory to download to
+Fix progress bar on MacOS
+Convert mp3/mp4 choice to a dropdown menu
+Allow multiple downloads of videos
+
+Release v1.0 of ytdl
