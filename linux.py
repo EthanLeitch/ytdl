@@ -4,7 +4,7 @@ from PyQt5 import QtCore, QtWidgets
 from PyQt5.QtWidgets import *
 from PyQt5.QtWidgets import QMainWindow, QWidget, QLabel, QLineEdit
 from PyQt5.QtWidgets import QPushButton
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import *
 from PyQt5.QtCore import QSize    
 from time import sleep
 
@@ -16,6 +16,7 @@ invalid = ""
 progress = ""
 finishedDownloading = ""
 p = ""
+dropdown = ""
 
 class Window(QWidget):
     def __init__(self):
@@ -36,16 +37,29 @@ class Window(QWidget):
         
         self.url.move(20, 20)
 
-        radiobutton = QRadioButton("Download audio and video")
-        radiobutton.setChecked(True)
-        radiobutton.encoding = "MP4"
-        radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 0, 0)
+        output = QLabel(self)
+        output.setText("Output Format:")
+        output.move(80, 60)
 
-        radiobutton = QRadioButton("Only download audio")
-        radiobutton.encoding = "MP3"
-        radiobutton.toggled.connect(self.onClicked)
-        layout.addWidget(radiobutton, 0, 1)
+        global dropdown
+
+        dropdown = QComboBox(self)
+        dropdown.addItem("MP4")
+        dropdown.addItem("MP3")
+        dropdown.move(180, 60)
+
+        dropdown.activated[str].connect(self.outputFormat)
+
+        #radiobutton = QRadioButton("Download audio and video")
+        #radiobutton.setChecked(True)
+        #radiobutton.encoding = "MP4"
+        #radiobutton.toggled.connect(self.onClicked)
+        #layout.addWidget(radiobutton, 0, 0)
+
+        #radiobutton = QRadioButton("Only download audio")
+        #radiobutton.encoding = "MP3"
+        #radiobutton.toggled.connect(self.onClicked)
+        #layout.addWidget(radiobutton, 0, 1)
 
         global pybutton
 
@@ -92,6 +106,15 @@ class Window(QWidget):
             encodingType = radioButton.encoding
             print(encodingType)
 
+    def outputFormat(self, text):
+        global encodingType
+        if text == "MP3":
+            print("mp3")
+            encodingType = "MP3"
+        if text == "MP4":
+            print("mp4")
+            encodingType = "MP4"
+
     def clickMethod(self):
         global encodingType
         global pybutton
@@ -112,12 +135,19 @@ class Window(QWidget):
                 progress.show()
                 if encodingType == "MP4":
                     ytdl_opts = {
+                        'format': 'bestvideo[ext=m4a]+bestaudio/best',
                         'extract-audio': 'True',
                         'progress_hooks': [self.my_hook],
                         'outtmpl': '/home/' + getpass.getuser() + '/Downloads/%(title)s.%(ext)s',}
-                else:
+                if encodingType == "MP3":
                     ytdl_opts = {
-                        'format': 'bestaudio/best',       
+                        'format': 'bestaudio/best',
+                        'postprocessors': [{
+                            'key': 'FFmpegExtractAudio',
+                            'preferredcodec': 'mp3',
+                            'preferredquality': '192',
+                        }],
+     
                         'outtmpl': '/home/' + getpass.getuser() + '/Downloads/%(title)s.%(ext)s',        
                         'noplaylist' : True,        
                         'progress_hooks': [self.my_hook],
