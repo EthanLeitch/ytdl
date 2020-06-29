@@ -23,7 +23,7 @@ class Window(QWidget):
         layout = QGridLayout()
         self.setLayout(layout)
 
-        self.setMinimumSize(QSize(320, 140))    
+        self.setFixedSize(360, 140)
         self.setWindowTitle("YouTube Downloader") 
         self.setWindowIcon(QIcon('icon.png'))
 
