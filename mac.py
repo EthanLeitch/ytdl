@@ -112,13 +112,12 @@ class Window(QWidget):
                 progress.show()
                 if encodingType == "MP4":
                     ytdl_opts = {
-                        'extract-audio': 'True',
                         'progress_hooks': [self.my_hook],
-                        'outtmpl': 'Downloads/%(title)s.%(ext)s',}
+                        'outtmpl': '~/Downloads/%(title)s.%(ext)s',}
                 else:
                     ytdl_opts = {
                         'format': 'bestaudio/best',       
-                        'outtmpl': 'Downloads/%(title)s.%(ext)s',        
+                        'outtmpl': '~/Downloads/%(title)s.%(ext)s',        
                         'noplaylist' : True,        
                         'progress_hooks': [self.my_hook],
                     }
