@@ -1,6 +1,9 @@
 # Ignore python caching
 __pycache__/
 
+# Ignore random qt5 stuff
+.vscode/
+
 # Ignore all test videos
 *.mp4
 testvideos/
