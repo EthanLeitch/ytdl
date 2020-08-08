@@ -7,3 +7,6 @@ __pycache__/
 # Ignore all test videos
 *.mp4
 testvideos/
+
+# Ignore Git Artifacts
+.DS_Store
